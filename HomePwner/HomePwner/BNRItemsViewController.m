@@ -47,12 +47,37 @@
 
 - (IBAction)addNewItem:(id)sender
 {
+    // Make new index path for Section 0, last row
+    // NSInteger lastRow = [self.tableView numberOfRowsInSection:0];
     
+    // Create new BNRItem and add it to store
+    BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
+    // Figure out where that last item is in the array
+    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+    
+    // insert this new row into table
+    [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                          withRowAnimation:UITableViewRowAnimationTop];
 }
 
 - (IBAction)toggleEditingMode:(id)sender
 {
-    
+    // if you are currently in editing mode ...
+    if (self.isEditing) {
+        // change text of button to inform user of state
+        [sender setTitle:@"Edit" forState:UIControlStateNormal];
+        
+        // turn off editing mode
+        [self setEditing:NO animated:YES];
+    } else {
+        // change text of button to inform user of state
+        [sender setTitle:@"Done" forState:UIControlStateNormal];
+        
+        // turn off editing mode
+        [self setEditing:YES animated:YES];
+    }
 }
 
 - (UIView*)headerView
