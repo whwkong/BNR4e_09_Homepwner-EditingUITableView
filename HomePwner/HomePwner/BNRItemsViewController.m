@@ -12,8 +12,9 @@
 
 
 @interface BNRItemsViewController ()
-{
-}
+
+@property (nonatomic, strong) IBOutlet UIView *headerView;
+
 @end
 
 
@@ -38,7 +39,36 @@
     
     [self.tableView registerClass:[UITableViewCell class]
            forCellReuseIdentifier:@"UITableViewCell"];
+    
+    UIView *header = self.headerView;
+    [self.tableView setTableHeaderView:header];
 }
+
+
+- (IBAction)addNewItem:(id)sender
+{
+    
+}
+
+- (IBAction)toggleEditingMode:(id)sender
+{
+    
+}
+
+- (UIView*)headerView
+{
+    // if headerView is not loaded yet
+    if (!_headerView) {
+        
+        // load HeaderView.xib
+        [[NSBundle mainBundle] loadNibNamed:@"HeaderView"
+                                      owner:self
+                                    options:nil];
+    }
+    
+    return _headerView;
+}
+
 
 // implementation required UITableViewDataSource method
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
