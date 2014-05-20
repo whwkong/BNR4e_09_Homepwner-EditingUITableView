@@ -16,9 +16,12 @@
 @property (nonatomic, readonly) NSArray* allItems;
 
 // accessor to singleton
-+(instancetype) sharedStore;
++ (instancetype)sharedStore;
 
 // item is created in store; item is returned.
--(BNRItem*) createItem; 
+- (BNRItem*)createItem;
+- (void)moveItemAtIndex:(NSUInteger)fromIndex
+                toIndex:(NSUInteger)toIndex;
+- (void)removeItem:(BNRItem*)item;
 
 @end

@@ -8,3 +8,5 @@ This chapter covers :
 - adding header view to UITableView
 ⁃ header view has 2 buttons, that allows UITableView to enter 
 editing mode 
+- implementing adding,deleting and moving rows in UITableView.
+

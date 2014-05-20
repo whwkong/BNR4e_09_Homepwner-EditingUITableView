@@ -47,14 +47,12 @@
 
 - (IBAction)addNewItem:(id)sender
 {
-    // Make new index path for Section 0, last row
-    // NSInteger lastRow = [self.tableView numberOfRowsInSection:0];
-    
     // Create new BNRItem and add it to store
     BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
-    // Figure out where that last item is in the array
+    // Determine index of last item in the array
     NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
     
+    // Make new index path for Section 0, last row
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
     
     // insert this new row into table
@@ -120,6 +118,31 @@
     return cell;
 }
 
+// tableView handler for deleting or inserting rows.
+-(void)tableView:(UITableView *)tableView
+    commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+     forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // if table view is asking to commit a delete command...
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSArray *items = [[BNRItemStore sharedStore] allItems];
+        BNRItem *item = items[indexPath.row];
+        [[BNRItemStore sharedStore] removeItem:item];
+        
+        // also, remove that row from the table view with an animation
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    // TBD the other editing style is Inserting a Row.
+}
+
+// tableView handler for moving rows 
+- (void) tableView:(UITableView *)tableView
+moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+       toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    [[BNRItemStore sharedStore] moveItemAtIndex:sourceIndexPath.row
+                                        toIndex:destinationIndexPath.row];
+}
 
 
 @end

@@ -46,14 +46,6 @@
     
     _privateItems = [[NSMutableArray alloc] init];
     
-    
-    if (self) {
-        // initialize array with 5 items
-        for (int i=0; i<5; ++i) {
-            [self createItem];
-        }
-    }
-    
     return self;
 }
 
@@ -70,6 +62,27 @@
     
     
     return item; 
+}
+
+- (void)moveItemAtIndex:(NSUInteger)fromIndex
+                toIndex:(NSUInteger)toIndex
+{
+    if (fromIndex == toIndex)
+        return;
+    
+    // Get pointer to object being moved
+    BNRItem *item = self.privateItems[fromIndex];
+    
+    // Remove item from array
+    [self.privateItems removeObjectAtIndex:fromIndex];
+    
+    // Re-insert item back into array
+    [self.privateItems insertObject:item atIndex:toIndex];
+}
+
+- (void)removeItem:(BNRItem*)item
+{
+    [self.privateItems removeObjectIdenticalTo:item];
 }
 
 @end
